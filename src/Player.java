@@ -1,62 +1,53 @@
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
-public class Player extends Sprite {
-	Player(String typeS, float tempX, float tempY) throws SlickException {
-		super(typeS, tempX, tempY);
-		// TODO Auto-generated constructor stub
+import java.util.ArrayList;
+
+import org.newdawn.slick.Input;
+
+public class Player extends Sprite  {
+	public float r = getX();
+	
+	public Player(float x, float y) {
+		super("res/player.png", x, y);
+	}
+	
+	public float playerX() {
+		return r;
+	}
+	
+	private int c =1;
+	
+
+	public int getC() {
+		return c;
 	}
 
-	public void update(Input input, int delta) throws NumberFormatException, SlickException {
-			
-			if (input.isKeyPressed(Input.KEY_RIGHT)) {
-				float x = getX();
-				System.out.println(x);
-				boolean b = Loader.restrictedArea((float) (x+.01), (float) (getY()));
-				if(b) {
-					setX(x);
-				}
-				else {
-					setX(x+=1);
-				}
-				
-			}
-			if (input.isKeyPressed(Input.KEY_LEFT)) {
-				float x;
-				x = getX();
-				boolean b = Loader.restrictedArea((float) (x-.01), (float) (getY()));
-				if(b) {
-					setX(x);
-				}
-				else {
-					setX(x-=1);
-				}
-				
-			}
-			if (input.isKeyPressed(Input.KEY_UP)) {
-				float y = getY();
-				boolean b = Loader.restrictedArea((float) (getX()), (float) (y-0.01));
-				if(b) {
-					setY(y);
-				}
-				else {
-					setY(y-=1);
-				}
-			
-			}
+	public void setC(int c) {
+		this.c = c;
+	}
 	
-			if (input.isKeyPressed(Input.KEY_DOWN)) {
-
-				float y = getY();
-				boolean b = Loader.restrictedArea((float) (getX()), (float) (y+0.01));
-				if(b) {
-					setY(y);
-				}
-				else {
-					setY(y+=1);
-				}
-			
-			}
-		}	
-
+	
+	@Override
+	public void update(Input input, int delta, ArrayList<Sprite> sprites) {
+		int dir = DIR_NONE;
+		
+		if (input.isKeyPressed(Input.KEY_LEFT)) {
+		
+			dirP = dir = DIR_LEFT;
+		}
+		else if (input.isKeyPressed(Input.KEY_RIGHT)) {
+			dirP = dir = DIR_RIGHT;
+		}
+		else if (input.isKeyPressed(Input.KEY_UP)) {
+			dirP = dir = DIR_UP;
+		}
+		else if (input.isKeyPressed(Input.KEY_DOWN)) {
+			dirP = dir = DIR_DOWN;
+		}
+		
+		// Move to our destination
+		moveToDest(dir);
+		
+		
+	}
+	
 }
