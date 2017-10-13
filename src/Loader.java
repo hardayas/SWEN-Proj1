@@ -1,4 +1,7 @@
-
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 	import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

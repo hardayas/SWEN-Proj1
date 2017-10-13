@@ -1,11 +1,17 @@
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 
 import java.util.ArrayList;
-
 import java.util.Iterator;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+/**
+ * World class controls the interaction among
+ * various types of sprites and keeps track of everything.
+ */
 public class World {
 	
 	public static final float EPSILON = .1f;
@@ -13,20 +19,21 @@ public class World {
 	private boolean restart = false;
 	private boolean nextLevel = false; 
 	private boolean undoFlag = false;
-	private int totalMoves = 0;
 	private boolean playerMoved = false;
+	private int totalMoves = 0;
 	
 	private  ArrayList<Sprite> sprites;
-	private ArrayList<Sprite> toRemove = new ArrayList<Sprite>();
-	private ArrayList<Sprite> toAdd = new ArrayList<Sprite>();
-	private Explosion explosion;
+	private ArrayList<Sprite> spritesToRemove = new ArrayList<Sprite>();
+	private ArrayList<Sprite> spritesToAdd = new ArrayList<Sprite>();
 	
-	//all getters and setters
+	/** All getters and setter for the private attributes
+	 *  listed above.
+     */
 	public ArrayList<Sprite> getToRemove() {
-		return toRemove;
+		return spritesToRemove;
 	}
 	public ArrayList<Sprite> getToAdd() {
-		return toAdd;
+		return spritesToAdd;
 	}
 
 	public ArrayList<Sprite> getSprites() {
@@ -81,7 +88,10 @@ public class World {
 		this.playerMoved = playerMoved;
 	}
 	
-	//all methods
+	/** Update the game state for a frame.
+     * @param gc The Slick game container object.
+     * @param delta Time passed since last frame (milliseconds).
+     */
 	public void update(Input input, int delta) throws ClassNotFoundException {
 		for (Iterator<Sprite> sprite = sprites.iterator(); sprite.hasNext(); ) {
 			if (sprite != null) {
@@ -97,6 +107,10 @@ public class World {
 		}
 	}
 	
+	/** Render the entire screen, so it reflects the current game state.
+     * @param gc The Slick game container object.
+     * @param g The Slick graphics object, used for drawing.
+     */
 	public void render(Graphics g) {
 		for (Iterator<Sprite> sprite = sprites.iterator(); sprite.hasNext(); ) {
 			if (sprite != null) {
@@ -106,41 +120,67 @@ public class World {
 		g.drawString("Player Moves = " + totalMoves, 100, 100);
 	}
 	
+	/** CreateSprite will add a sprite to ArrayList spritesToAdd which
+	 * will then add those sprites to Arraylist sprites in next update. 
+     * @param sprite Sprites to be added.
+     */
 	public void createSprite(Sprite sprite) {
-		toAdd.add(sprite);
+		spritesToAdd.add(sprite);
 	}
 	
+	/** CreateSprite will add a sprite to ArrayList spritesToRemove which
+	 * will then remove those sprites from Arraylist sprites in next update. 
+     * @param sprite Sprites to be removed.
+     */
 	public void destroySprite(Sprite sprite) {
-		toRemove.add(sprite);
+		spritesToRemove.add(sprite);
 	}
 	
-	//it checks if wall or pushable at the location x y
+	/** isBlocked checks if there is wall or pushable at the location x, y. 
+     * @param x X coordinate.
+     * @param x Y coordinate.
+     * @return boolean
+     */
 	public boolean isBlocked(float x, float y) {
 		
 		for (Sprite sprite : sprites) {
 			
 			//replace here with epsilon
-			boolean block = Math.abs(sprite.getX()-x) < EPSILON && Math.abs(sprite.getY()-y) < EPSILON 
-					&& Pushable.class.isAssignableFrom(sprite.getClass());
+			boolean block = Math.abs(sprite.getX()-x) < EPSILON
+						    && Math.abs(sprite.getY()-y) < EPSILON 
+							&& Pushable.class.isAssignableFrom(sprite.getClass());
 			
-			boolean wall = Math.abs(sprite.getX()-x) < EPSILON && Math.abs(sprite.getY()-y) < EPSILON
-					&& WallType.class.isAssignableFrom(sprite.getClass());
+			boolean wall = Math.abs(sprite.getX()-x) < EPSILON 
+						   && Math.abs(sprite.getY()-y) < EPSILON
+					       && WallType.class.isAssignableFrom(sprite.getClass());
 				
-			if( block || wall) {return true;}		
+			if( block || wall) {
+				return true;
+			}		
 		}	
 		return false;
 	}
 	
-	//returns the sprite of type on x, y of class pushable else return null
+	/** Given x, y this function gives the sprite at that location.
+	 * It only considers sprites of type wall and pushable. 
+     * @param x X coordinate.
+     * @param x Y coordinate.
+     * @return sprite Sprite at that x, y.
+     */
 	public Sprite getSpriteOfType(float x , float y) {	
 		
 		for (Sprite sprite : sprites) {
 			
 			//skip if not pushable or wall
 			if(!Pushable.class.isAssignableFrom(sprite.getClass()) 
-					&& !WallType.class.isAssignableFrom(sprite.getClass())) { continue; }
+				&& !WallType.class.isAssignableFrom(sprite.getClass())) {
+				
+				continue; 
+			}
 			
-			if (Math.abs(sprite.getX() - x) < EPSILON && Math.abs(sprite.getY() - y) < EPSILON ) {
+			if (Math.abs(sprite.getX() - x) < EPSILON 
+				&& Math.abs(sprite.getY() - y) < EPSILON ) {
+				
 				return sprite;
 			}
 		}
@@ -148,7 +188,12 @@ public class World {
 		
 	}
 	
-	// returns Sprite of class name if found else return null
+	/** Going through sprites in the world it will return
+	 * the Sprite of class name or null if not found. 
+     * @param name Class name to be tested.
+     * @return sprite Sprite of type name.
+     * @return null If the sprite is no found.
+     */
 	public Sprite getSpriteOfType(String name) throws ClassNotFoundException {
 		
 		for(Sprite sprite: sprites) {
@@ -159,7 +204,10 @@ public class World {
 		return null;
 	}
 	
-	//whether or not all targets are activated yet
+	/** 
+	 * Checks if every target is occupied with a movable 
+     * @return boolean
+     */
 	public boolean allTargetActivated() {
 		for (Sprite sprite : sprites) {
 			if(sprite.getType().contains("Target")) {
@@ -173,7 +221,11 @@ public class World {
 		}
 		return true;
 	}
-
+	
+	/** When player makes contact with enemy unit
+	 * restart flag will be set to true. 
+     * @param enemy Sprite against which player is to be tested.
+     */
 	// this will restart level if player makes contact with enemy
 	public void restart(Sprite enemy) throws ClassNotFoundException {
 		Player player = (Player) getSpriteOfType("Player");

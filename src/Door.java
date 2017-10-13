@@ -1,3 +1,7 @@
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 import org.newdawn.slick.Input;
 
 public class Door extends WallType {
@@ -5,9 +9,7 @@ public class Door extends WallType {
 		super("res/door.png", x, y);
 	}
 	
-	Door copy = this;
-	public boolean closed = true;
-	float x, y;
+	
 	@Override
 	public void update(Input input, int delta, World world) throws ClassNotFoundException {
 		

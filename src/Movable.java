@@ -1,7 +1,16 @@
-import java.util.ArrayList;
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 
+import java.util.ArrayList;
 import org.newdawn.slick.Input;
 
+/**
+ * Movable is an abstract class to all the sprites in the 
+ * game that can move.
+ *
+ */
 public abstract class Movable extends Sprite {
 
 	
@@ -24,7 +33,6 @@ public abstract class Movable extends Sprite {
 	}
 	public void addToHistory(float x, float y) {
 		history.push(x, y);
-		//System.out.println(history.getLastX() + " " + history.getLastY());	
 	}
 	
 	public void undo() {
@@ -39,6 +47,7 @@ public abstract class Movable extends Sprite {
 		boolean result = false;
 		int speed = 32;
 		float x = getX(), y = getY();
+		
 		// Translate the direction to an x and y displacement
 		int delta_x = 0,
 			  delta_y = 0;
@@ -59,24 +68,12 @@ public abstract class Movable extends Sprite {
 		
 		// Make sure the position isn't occupied!
 		if (!world.isBlocked(x + delta_x, y + delta_y) ) {
-			
-			
-			if(delta_x != 0 || delta_y != 0) {
-				result = true;
-				ArrayList<Sprite> s1 = null;
-				
-				//world.updateMovableHistory(s1);
-				//need to work here
-				
-			}
 			setX(x + delta_x); setY(y + delta_y);
 		}
 		return result;
 		
 	}
 	public void moveToDest(int dir, float x, float y) {
-
-		
 	}
 	
 	public void onMove(int dir, float testX, float testY) {

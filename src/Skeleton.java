@@ -1,5 +1,7 @@
-import java.util.ArrayList;
-
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 import org.newdawn.slick.Input;
 
 public class Skeleton extends Movable {

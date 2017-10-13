@@ -1,3 +1,7 @@
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 import org.newdawn.slick.Input;
 
 public class Ice extends Pushable {
@@ -5,9 +9,9 @@ public class Ice extends Pushable {
 		super("res/ice.png", x, y);
 	}
 	
-	private final float oneSecond = 1;
-	int moveDirection = Sprite.DIR_NONE;
-	float time;
+	private final float LIMIT = .25f;
+	private int moveDirection = Sprite.DIR_NONE;
+	private float time;
 	
 	@Override
 	public void update(Input input, int delta, World world) {
@@ -20,7 +24,7 @@ public class Ice extends Pushable {
 			undo();
 		}
 		else {
-			if(time>oneSecond) {
+			if(time > LIMIT) {
 				moveToDest(moveDirection, world);
 				time = 0;
 			}

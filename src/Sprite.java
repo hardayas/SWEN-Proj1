@@ -1,15 +1,14 @@
-
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-
-import java.util.ArrayList;
-
 import org.newdawn.slick.Graphics;
 
 public abstract class Sprite {
-	// Used to decide what direction an object is moving
-	// Look up enums to find a more elegant solution!
+	
 	public static final int DIR_NONE = 0;
 	public static final int DIR_LEFT = 1;
 	public static final int DIR_RIGHT = 2;

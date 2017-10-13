@@ -1,6 +1,18 @@
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 
 import org.newdawn.slick.Input;
 
+/**
+ * Player Class handles input from the user and moves in four directions 
+ * every update. When making a move if the position being
+ * moved into is pushable then it pushes it.
+ * If the player has been successful in making the move then it will be 
+ * history for undoing. It also triggers all the undoing as this is where
+ * the user input is interpreted.
+ */
 public class Player extends Movable  {
 	
 	public Player(float x, float y) {
@@ -8,6 +20,11 @@ public class Player extends Movable  {
 		
 	}
 	
+    /** Update the game state for a frame. 
+     * @param gc The Slick game container object.
+     * @param delta Time passed since last frame (milliseconds).
+     * @param world Current level of the game
+     */
 	@Override
 	public void update(Input input, int delta, World world) {
 		

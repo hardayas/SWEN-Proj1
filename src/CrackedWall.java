@@ -1,3 +1,7 @@
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 import org.newdawn.slick.Input;
 
 public class CrackedWall extends WallType {
@@ -11,7 +15,6 @@ public class CrackedWall extends WallType {
 		Sprite testSprite = world.getSpriteOfType(getX(), getY());
 		
 		if(testSprite != null && Tnt.class.isAssignableFrom(testSprite.getClass())) {
-			//prints if the collision is happening
 			world.destroySprite(this);
 		}
 		

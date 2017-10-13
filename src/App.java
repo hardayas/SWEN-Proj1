@@ -1,6 +1,6 @@
 /**
- * Sample Project for SWEN20003: Object Oriented Software Development 2017
- * by Eleanor McMurtry
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
  */
 
 import org.newdawn.slick.AppGameContainer;
@@ -42,7 +42,9 @@ public class App extends BasicGame
     		
     }
     
-    
+    /** Updates the level and also restarts same level.
+     * @param level Level that needs modification.
+     */
     public void modifyLevel(int level) {
     		if (level < TOTAL_LEVELS) {
     			world = new World(level);

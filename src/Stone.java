@@ -1,7 +1,7 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.newdawn.slick.Input;
+/**
+ * Project 2 SWEN20003: Object Oriented Software Development 2017
+ * by Hardaya Singh
+ */
 
 public class Stone extends Pushable {
 	public Stone(float x, float y) {
