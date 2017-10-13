@@ -1,53 +1,95 @@
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Input;
 
-public class Player extends Sprite  {
-	public float r = getX();
+public class Player extends Movable  {
 	
 	public Player(float x, float y) {
 		super("res/player.png", x, y);
+		
 	}
-	
-	public float playerX() {
-		return r;
-	}
-	
-	private int c =1;
-	
-
-	public int getC() {
-		return c;
-	}
-
-	public void setC(int c) {
-		this.c = c;
-	}
-	
+	public int playerCount = 0;
 	
 	@Override
-	public void update(Input input, int delta, ArrayList<Sprite> sprites) {
+	public void update(Input input, int delta, World world) {
 		int dir = DIR_NONE;
+		Sprite testSprite;
 		
-		if (input.isKeyPressed(Input.KEY_LEFT)) {
+		if (input.isKeyPressed(Input.KEY_LEFT) || input.isKeyPressed(Input.KEY_J)) {
+			playerCount++;
+			dir = DIR_LEFT;
+			testSprite = world.getSpriteOfType(getX()-App.TILE_SIZE, getY());
+			
+			//check if moving position is pushable
+			if(testSprite != null && Pushable.class.isAssignableFrom(testSprite.getClass())) {
+				
+				((Pushable)testSprite).push(dir, world);
+			
+			}
+		}	
+		else if (input.isKeyPressed(Input.KEY_RIGHT) || input.isKeyPressed(Input.KEY_L)) {
+			
+			dir = DIR_RIGHT;
+			playerCount++;
+			testSprite = world.getSpriteOfType(getX()+App.TILE_SIZE, getY());
+			
+			if(testSprite != null && Pushable.class.isAssignableFrom(testSprite.getClass())) {
+				((Pushable)testSprite).push(dir, world);
+			
+			}
+			
+		}
+		else if (input.isKeyPressed(Input.KEY_UP) || input.isKeyPressed(Input.KEY_I)) {
+			dir = DIR_UP;
+			playerCount++;
+			testSprite = world.getSpriteOfType(getX(), getY()-App.TILE_SIZE);
+			if(testSprite != null && Pushable.class.isAssignableFrom(testSprite.getClass())) {
+				
+				((Pushable)testSprite).push(dir, world);
+			
+			}
+			
+		}
+		else if (input.isKeyPressed(Input.KEY_DOWN) || input.isKeyPressed(Input.KEY_K)) {
+			dir = DIR_DOWN;
+			playerCount++;
+			testSprite = world.getSpriteOfType(getX(), getY()+App.TILE_SIZE);
+			if(testSprite != null && Pushable.class.isAssignableFrom(testSprite.getClass())) {
+				
+				((Pushable)testSprite).push(dir, world);
+			
+			}
+			
+		}
 		
-			dirP = dir = DIR_LEFT;
-		}
-		else if (input.isKeyPressed(Input.KEY_RIGHT)) {
-			dirP = dir = DIR_RIGHT;
-		}
-		else if (input.isKeyPressed(Input.KEY_UP)) {
-			dirP = dir = DIR_UP;
-		}
-		else if (input.isKeyPressed(Input.KEY_DOWN)) {
-			dirP = dir = DIR_DOWN;
+		//this moves player
+		world.setPlayerMoved(moveToDest(dir, world));
+		//depending on the input add to history
+		
+		
+		//undo
+		if(input.isKeyPressed(Input.KEY_U)) {
+			world.undoHistory();
 		}
 		
-		// Move to our destination
-		moveToDest(dir);
+		if(input.isKeyPressed(Input.KEY_R)) {
+			world.restart = true;
+		}
 		
+		//player count
+		//if(playerCount>5) {world.nextLevel = true; playerCount = 0;}
 		
 	}
+	
+	public void onMove(int dir, float testX, float testY) {
+		
+	}
+	
+
+	
+
+	
 	
 }

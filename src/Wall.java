@@ -1,6 +1,7 @@
 
-public class Wall extends Sprite {
+public class Wall extends WallType {
 	public Wall(float x, float y) {
 		super("res/wall.png", x, y);
 	}
+	
 }

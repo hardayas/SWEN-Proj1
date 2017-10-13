@@ -9,10 +9,19 @@ public class Loader {
 	private static String[][] types;
 	
 	private static int world_width;
+	
+	public static int getWorld_width() {
+		return world_width;
+	}
+
 	private static int world_height;
+	public static int getWorld_height() {
+		return world_height;
+	}
+
 	private static int offset_x;
 	private static int offset_y;
-	private static ArrayList<Sprite> list = new ArrayList<>();
+	private static ArrayList<Sprite> list;
 	
 	
 	public static ArrayList<Sprite> getList() {
@@ -37,7 +46,6 @@ public class Loader {
 	 * @param y		the y position
 	 * @return		the sprite object
 	 */
-	
 	
 	
 	private static Sprite createSprite(String name, float x, float y) {
@@ -88,7 +96,7 @@ public class Loader {
 		// Do bounds checking!
 		if (x >= 0 && x < world_width && y >= 0 && y < world_height) {
 			//System.out.println(x + "    " + y);
-			return types[(int)x][(int)y].equals(type);
+			return types[(int)x][(int)y].equals(type) || types[(int)x][(int)y].equals("stone");
 		}
 		// Default to blocked
 		return true;
@@ -100,6 +108,8 @@ public class Loader {
 	 * @return
 	 */
 	public static ArrayList<Sprite> loadSprites(String filename) {
+		
+		list = new ArrayList<>();
 		
 		// Open the file
 		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {

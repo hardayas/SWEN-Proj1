@@ -5,6 +5,7 @@
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -24,30 +25,71 @@ public class App extends BasicGame
     public static final int TILE_SIZE = 32;
     
     private World world;
+    private int level = 4;
 
     public App()
     {    	
         super("Shadow Blocks");
     }
-
+    
+    
+    
     @Override
     public void init(GameContainer gc)
     throws SlickException
     {
-    	world = new World();
+    	world = new World(level);
+    		
     }
-
+    
+    
+    public void modifyLevel(int level) {
+    		if (level<6) {
+    			world = new World(level);
+    			
+    		}
+    		
+    }
     /** Update the game state for a frame.
      * @param gc The Slick game container object.
      * @param delta Time passed since last frame (milliseconds).
      */
     @Override
     public void update(GameContainer gc, int delta)
-    throws SlickException
+    throws SlickException 
     {
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
-        world.update(input, delta);
+        
+        if(world.toRemove != null) world.getSprites().removeAll(world.toRemove);
+        if(world.toAdd != null) world.getSprites().addAll(world.toAdd);
+        
+        //mess
+        try {
+			world.update(input, delta);
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+        
+        if (world.restart) {
+        		modifyLevel(level);
+        }
+        
+        if(world.nextLevel) {
+			
+        		modifyLevel(++level);
+			
+			//System.out.println(world.nextLevel);
+			
+			
+		}
+        
+        if(input.isKeyPressed(Input.KEY_ESCAPE)) {
+            
+            gc.exit();
+            
+        }
     }
 
     /** Render the entire screen, so it reflects the current game state.
@@ -59,7 +101,7 @@ public class App extends BasicGame
     {
     	world.render(g);
     }
-
+    
     /** Start-up method. Creates the game and runs it.
      * @param args Command-line arguments (ignored).
      */
