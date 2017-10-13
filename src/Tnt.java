@@ -74,5 +74,4 @@ public class Tnt extends Pushable {
 		}
 		return result;
 	}
-	
 }

@@ -6,7 +6,9 @@ public abstract class Pushable extends Movable {
 	}
 	
 	public void push(int dir, World world) {
-			moveToDest(dir, world);
+			if(moveToDest(dir, world)) {
+				
+			}
 		
 	}
 	

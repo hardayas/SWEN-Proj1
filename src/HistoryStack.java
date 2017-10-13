@@ -3,35 +3,38 @@ import java.util.ArrayList;
 
 public class HistoryStack {
 	
-	public ArrayList<Float> xS;
+	public ArrayList<Float> xStack;
 	
-	public float getxS() {
-		return xS.get(xS.size()-1);
+	public float getLastX() {
+		return xStack.get(xStack.size()-1);
+	}
+	
+	public float getLastY() {
+		return yStack.get(yStack.size()-1);
 	}
 
-
-	public ArrayList<Float> yS;
+	public ArrayList<Float> yStack;
 	
 
 	public HistoryStack() {
-		xS = new ArrayList<Float>();
-		yS = new ArrayList<Float>();
+		xStack = new ArrayList<Float>();
+		yStack = new ArrayList<Float>();
 	}
 	
 	
 
-	public void push(float x, float y , World world) {
-		xS.add(x); 
-		yS.add(y);
+	public void push(float x, float y) {
+		xStack.add(x); 
+		yStack.add(y);
 	}
 	
 	public void pop() {
-		xS.remove(xS.size() - 1);
-		yS.remove(yS.size() - 1);
+		xStack.remove(xStack.size() - 1);
+		yStack.remove(yStack.size() - 1);
 		
 	}
 	
 	public int size() {
-		return xS.size();
+		return xStack.size();
 	}
 }

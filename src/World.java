@@ -101,8 +101,8 @@ public class World {
 	
 	public void updateMovableHistory(float x, float y) {
 		
-		history.push(x, y, this);
-		System.out.println(history.getxS());
+		//history.push(x, y, this);
+		System.out.println(history.getLastX());
 	}
 	
 	public void undoHistory() {

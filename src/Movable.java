@@ -8,16 +8,23 @@ public abstract class Movable extends Sprite {
 	
 	public Movable(String image_src, float x, float y) {
 		super(image_src, x, y);
-		// TODO Auto-generated constructor stub
+		
 	}
+	
+	private HistoryStack history = new HistoryStack();
+	
 	public boolean hasHistory() {
 		return true;
 	}
-	public void addToHistory() {
-		
+	public void addToHistory(float x, float y) {
+		history.push(x, y);
+		//System.out.println(history.getLastX() + " " + history.getLastY());	
 	}
+	
 	public void undo() {
-		
+		setX(history.getLastX());
+		setY(history.getLastY());
+		history.pop();
 	}
 	public boolean moveToDest(int dir, World world) {
 		boolean result = false;

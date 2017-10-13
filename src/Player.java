@@ -10,12 +10,12 @@ public class Player extends Movable  {
 		super("res/player.png", x, y);
 		
 	}
-	public int playerCount = 0;
+	private int playerCount = 0;
 	
 	@Override
 	public void update(Input input, int delta, World world) {
 		
-		float x = getX(), y = getY();
+		float lastX = getX(), lastY = getY();
 		
 		int dir = DIR_NONE;
 		Sprite testSprite;
@@ -70,7 +70,7 @@ public class Player extends Movable  {
 		//this moves player
 		if(moveToDest(dir, world)) {
 			world.setPlayerMoved(true);
-			world.updateMovableHistory(x, y);
+			addToHistory(lastX, lastY);
 		}else {
 			world.setPlayerMoved(false);
 		}
@@ -81,7 +81,7 @@ public class Player extends Movable  {
 		
 		//undo
 		if(input.isKeyPressed(Input.KEY_U)) {
-			world.undoHistory();
+			undo();
 		}
 		
 		if(input.isKeyPressed(Input.KEY_R)) {
