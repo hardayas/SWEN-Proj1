@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class HistoryStack {
 	
-	public ArrayList<Float> xStack;
+	public ArrayList<Float> xStack, yStack;
 	
 	public float getLastX() {
 		return xStack.get(xStack.size()-1);
@@ -23,9 +23,6 @@ public class HistoryStack {
 	public float getSecodLastY() {
 		return yStack.get(yStack.size()-2);
 	}
-
-	public ArrayList<Float> yStack;
-	
 
 	public HistoryStack() {
 		xStack = new ArrayList<Float>();

@@ -9,7 +9,15 @@ public class Switch extends Sprite {
 		super("res/switch.png", x, y);
 	}
 	private float xDoor, yDoor;
-	public boolean doorClosed = true;
+	private boolean doorClosed = true;
+	
+	public boolean isDoorClosed() {
+		return doorClosed;
+	}
+
+	public void setDoorClosed(boolean doorClosed) {
+		this.doorClosed = doorClosed;
+	}
 	
 	@Override
 	public void update(Input input, int delta, World world) throws ClassNotFoundException  {
@@ -25,13 +33,14 @@ public class Switch extends Sprite {
 			
 			//world.destroySprite(door);
 			
-			doorClosed = false;
+			setDoorClosed(false);
 			
 		} else {
 			if(door == null) {
 				world.createSprite(new Door(xDoor, yDoor));
 			}
-			doorClosed = true;
+			setDoorClosed(true);
 		}
 	}
+	
 }

@@ -14,7 +14,7 @@ public class Door extends WallType {
 	public void update(Input input, int delta, World world) throws ClassNotFoundException {
 		
 		Switch  test = (Switch)world.getSpriteOfType("Switch"); 
-		if(!test.doorClosed) {
+		if(!test.isDoorClosed()) {
 			world.destroySprite(this);
 		}
 	}

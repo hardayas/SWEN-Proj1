@@ -75,27 +75,9 @@ public abstract class Sprite {
 		y *= App.TILE_SIZE;
 	}
 	
-	 public void moveToDest(int dir) {
-		
-	}
-
-	
-	public void addTag(String tag) {	
-	}
-	public void removeTag(String tag) {	
-	}
-	public boolean compareTag(String compare) {	
-		return true;
-	}
-
 	public void update(Input input, int delta, World world) throws ClassNotFoundException {
 		
-		
 	}
 	
-	public Sprite clone() {
-		Sprite copy = null;
-		return copy;
-	}
 }
 
