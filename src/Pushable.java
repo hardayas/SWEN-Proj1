@@ -18,7 +18,7 @@ public abstract class Pushable extends Movable {
 		if(world.isPlayerMoved()) {
 			addToHistory(getX(), getY());
 		}
-		if(world.undoFlag) {
+		if(world.isUndoFlag()) {
 			undo();
 		}
 	}

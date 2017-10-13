@@ -9,9 +9,10 @@ public class Skeleton extends Movable {
 	
 	int dir = Sprite.DIR_UP;
 	
-	public void update(Input input, int delta, World world) {
+	public void update(Input input, int delta, World world) throws ClassNotFoundException {
 		
-		
+		//checks if this unit has made contact with the player and restart if yes 
+		world.restart(this);
 			
 		if(dir == Sprite.DIR_UP) {
 			if(!world.isBlocked(getX(), getY() - App.TILE_SIZE)) {

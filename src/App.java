@@ -5,7 +5,6 @@
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -25,8 +24,9 @@ public class App extends BasicGame
     public static final int TILE_SIZE = 32;
     
     private World world;
-    private int level = 2;
-
+    private int level = 1;
+    private final int TOTAL_LEVELS = 6;
+    
     public App()
     {    	
         super("Shadow Blocks");
@@ -44,7 +44,7 @@ public class App extends BasicGame
     
     
     public void modifyLevel(int level) {
-    		if (level<6) {
+    		if (level < TOTAL_LEVELS) {
     			world = new World(level);
     			
     		}
@@ -61,10 +61,11 @@ public class App extends BasicGame
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
         
-        if(world.toRemove != null) world.getSprites().removeAll(world.toRemove);
-        if(world.toAdd != null) world.getSprites().addAll(world.toAdd);
+        // Alter world for next update if needed
+        if(world.getToRemove() != null) world.getSprites().removeAll(world.getToRemove());
+        if(world.getToAdd() != null) world.getSprites().addAll(world.getToAdd());
         
-        //mess
+        
         try {
 			world.update(input, delta);
 		} catch (ClassNotFoundException e) {
@@ -72,23 +73,16 @@ public class App extends BasicGame
 			e.printStackTrace();
 		}
         
-        if (world.restart) {
+        if (world.isRestart()) {
         		modifyLevel(level);
         }
         
-        if(world.nextLevel) {
-			
+        if(world.isNextLevel()) {
         		modifyLevel(++level);
-			
-			//System.out.println(world.nextLevel);
-			
-			
 		}
         
-        if(input.isKeyPressed(Input.KEY_ESCAPE)) {
-            
-            gc.exit();
-            
+        if(input.isKeyPressed(Input.KEY_ESCAPE)) {   
+            gc.exit();     
         }
     }
 

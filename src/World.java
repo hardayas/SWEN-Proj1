@@ -8,20 +8,27 @@ import org.newdawn.slick.Input;
 
 public class World {
 	
-	boolean restart = false;
-	boolean nextLevel = false; //influenced by player and target
-	boolean closedDoor = true;
-	boolean undoFlag = false;
+	public static final float EPSILON = .1f;
 	
-	private  ArrayList<Sprite> sprites;
-	ArrayList<Sprite> toRemove = new ArrayList<Sprite>();
-	ArrayList<Sprite> toAdd = new ArrayList<Sprite>();
-	HistoryStack history = new HistoryStack();
-	Explosion explosion;
-		
-	
+	private boolean restart = false;
+	private boolean nextLevel = false; 
+	private boolean undoFlag = false;
+	private int totalMoves = 0;
 	private boolean playerMoved = false;
 	
+	private  ArrayList<Sprite> sprites;
+	private ArrayList<Sprite> toRemove = new ArrayList<Sprite>();
+	private ArrayList<Sprite> toAdd = new ArrayList<Sprite>();
+	private Explosion explosion;
+	
+	//all getters and setters
+	public ArrayList<Sprite> getToRemove() {
+		return toRemove;
+	}
+	public ArrayList<Sprite> getToAdd() {
+		return toAdd;
+	}
+
 	public ArrayList<Sprite> getSprites() {
 		return sprites;
 	}
@@ -34,6 +41,47 @@ public class World {
 		this.sprites = Loader.loadSprites("res/levels/"+level+".lvl");
 	}
 	
+	public boolean isRestart() {
+		return restart;
+	}
+
+	public void setRestart(boolean restart) {
+		this.restart = restart;
+	}
+
+	public boolean isNextLevel() {
+		return nextLevel;
+	}
+
+	public void setNextLevel(boolean nextLevel) {
+		this.nextLevel = nextLevel;
+	}
+
+	public boolean isUndoFlag() {
+		return undoFlag;
+	}
+
+	public void setUndoFlag(boolean undoFlag) {
+		this.undoFlag = undoFlag;
+	}
+	
+	public int getTotalMoves() {
+		return totalMoves;
+	}
+
+	public void setTotalMoves(int totalMoves) {
+		this.totalMoves = totalMoves;
+	}
+	
+	public boolean isPlayerMoved() {
+		return playerMoved;
+	}
+
+	public void setPlayerMoved(boolean playerMoved) {
+		this.playerMoved = playerMoved;
+	}
+	
+	//all methods
 	public void update(Input input, int delta) throws ClassNotFoundException {
 		for (Iterator<Sprite> sprite = sprites.iterator(); sprite.hasNext(); ) {
 			if (sprite != null) {
@@ -41,6 +89,7 @@ public class World {
 			}
 		}
 		
+		// this adds explosion effect
 		Tnt tnt = (Tnt)getSpriteOfType("Tnt");
 		if(tnt != null && tnt.isExplosion()) {
 			Explosion explosion = new Explosion(tnt.getX(), tnt.getY());
@@ -54,6 +103,7 @@ public class World {
 				sprite.next().render(g);
 			}
 		}
+		g.drawString("Player Moves = " + totalMoves, 100, 100);
 	}
 	
 	public void createSprite(Sprite sprite) {
@@ -64,56 +114,37 @@ public class World {
 		toRemove.add(sprite);
 	}
 	
+	//it checks if wall or pushable at the location x y
 	public boolean isBlocked(float x, float y) {
-		//right now it checks wall and pushables at the location x y
+		
 		for (Sprite sprite : sprites) {
 			
 			//replace here with epsilon
-			boolean block = Math.abs(sprite.getX()-x) < 1 && Math.abs(sprite.getY()-y) < 1 
+			boolean block = Math.abs(sprite.getX()-x) < EPSILON && Math.abs(sprite.getY()-y) < EPSILON 
 					&& Pushable.class.isAssignableFrom(sprite.getClass());
 			
-			boolean wall = Math.abs(sprite.getX()-x) < 1 && Math.abs(sprite.getY()-y) < 1
+			boolean wall = Math.abs(sprite.getX()-x) < EPSILON && Math.abs(sprite.getY()-y) < EPSILON
 					&& WallType.class.isAssignableFrom(sprite.getClass());
 				
-			if( block || wall) {return true;}
-				
-		}
-			
-		
+			if( block || wall) {return true;}		
+		}	
 		return false;
 	}
 	
 	//returns the sprite of type on x, y of class pushable else return null
 	public Sprite getSpriteOfType(float x , float y) {	
-		Sprite s = null;
+		
 		for (Sprite sprite : sprites) {
-			//skip if not pushable or wall
-			if(!Pushable.class.isAssignableFrom(sprite.getClass()) && !WallType.class.isAssignableFrom(sprite.getClass())) {continue;}
 			
-			if (Math.abs(sprite.getX() - x) < 5 && Math.abs(sprite.getY() - y) < 5 
-					) {
-				//System.out.println(sprite);
+			//skip if not pushable or wall
+			if(!Pushable.class.isAssignableFrom(sprite.getClass()) 
+					&& !WallType.class.isAssignableFrom(sprite.getClass())) { continue; }
+			
+			if (Math.abs(sprite.getX() - x) < EPSILON && Math.abs(sprite.getY() - y) < EPSILON ) {
 				return sprite;
 			}
 		}
-		return s;
-		
-	}
-	
-	public void updateMovableHistory(float x, float y) {
-		
-		//history.push(x, y, this);
-		System.out.println(history.getLastX());
-	}
-	
-	public void undoHistory() {
-		
-		//System.out.println(history.size());
-		history.pop();
-		/*ArrayList<Sprite> prevSprites = history.getStack();*/
-		/*for(Sprite s: history.getStack()) {
-			System.out.println(s.getType() + " " + s.getX());
-		}*/
+		return null;
 		
 	}
 	
@@ -128,40 +159,30 @@ public class World {
 		return null;
 	}
 	
-
-	
+	//whether or not all targets are activated yet
 	public boolean allTargetActivated() {
-		//go through all sprites
 		for (Sprite sprite : sprites) {
-			
-			
-			
 			if(sprite.getType().contains("Target")) {
 				
-				Sprite s = getSpriteOfType(sprite.getX(), sprite.getY());
-				if(s == null) {return false;}
+				//checking if there is a block at each target location
+				Sprite block = getSpriteOfType(sprite.getX(), sprite.getY());
+				if(block == null) {
+					return false;
+					}
 			}
 		}
 		return true;
 	}
 
-	public boolean isPlayerMoved() {
-		return playerMoved;
-	}
-
-	public void setPlayerMoved(boolean playerMoved) {
-		this.playerMoved = playerMoved;
-	}
-	
-	//creates a list copy
-	public ArrayList<Sprite> copy(ArrayList<Sprite> sprites) {
-		ArrayList<Sprite> copy = new ArrayList<Sprite>();
-		for(Sprite current : sprites) {
-			copy.add(current);
-		}
-		return copy;
+	// this will restart level if player makes contact with enemy
+	public void restart(Sprite enemy) throws ClassNotFoundException {
+		Player player = (Player) getSpriteOfType("Player");
 		
+		if(Math.abs(player.getX() - enemy.getX()) < EPSILON && 
+				Math.abs(player.getY() - enemy.getY()) < EPSILON) {
+			setRestart(true);
+			
+		}
 	}
-	
 	
 }

@@ -6,7 +6,11 @@ public class Rogue extends Movable {
 	}
 	
 	int dir = Sprite.DIR_LEFT;
-	public void update(Input input, int delta, World world) {
+	public void update(Input input, int delta, World world) throws ClassNotFoundException {
+		
+		//checks if this unit has made contact with the player and restart if yes 
+		world.restart(this);
+		
 		if(world.isPlayerMoved()) {
 			
 			Sprite testSprite;

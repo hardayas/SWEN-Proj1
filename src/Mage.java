@@ -6,6 +6,9 @@ public class Mage extends Sprite {
 	}
 	public void update(Input input, int delta, World world) throws ClassNotFoundException {
 		
+		//checks if this unit has made contact with the player and restart if yes 
+		world.restart(this);
+		
 		if(world.isPlayerMoved()) {
 			float x = world.getSpriteOfType("Player").getX() - getX() ;
 			float y = world.getSpriteOfType("Player").getY() - getY();
@@ -21,6 +24,5 @@ public class Mage extends Sprite {
 				}
 			}
 		}
-
 	}
 }

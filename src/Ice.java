@@ -16,7 +16,7 @@ public class Ice extends Pushable {
 		if(world.isPlayerMoved()) {
 			addToHistory(getX(), getY());
 		}
-		if(world.undoFlag) {
+		if(world.isUndoFlag()) {
 			undo();
 		}
 		else {

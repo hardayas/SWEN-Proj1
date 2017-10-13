@@ -10,13 +10,8 @@ public class Target extends Sprite {
 	@Override
 	public void update(Input input, int delta, World world) {
 		activated = (world.allTargetActivated());
-		world.nextLevel = activated;
+		world.setNextLevel(activated);
 		
-		if(activated) System.out.println("all target activated");
-	}
-
-	public boolean isActivated() {
-		return activated;
 	}
 	
 }
