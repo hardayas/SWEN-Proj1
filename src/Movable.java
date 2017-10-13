@@ -45,7 +45,7 @@ public abstract class Movable extends Sprite {
 	}
 	public boolean moveToDest(int dir, World world) {
 		boolean result = false;
-		int speed = 32;
+		int speed = App.TILE_SIZE;
 		float x = getX(), y = getY();
 		
 		// Translate the direction to an x and y displacement
@@ -68,15 +68,14 @@ public abstract class Movable extends Sprite {
 		
 		// Make sure the position isn't occupied!
 		if (!world.isBlocked(x + delta_x, y + delta_y) ) {
+			
+			if(delta_x != 0 || delta_y != 0) {		
+				result = true;		
+			}
 			setX(x + delta_x); setY(y + delta_y);
 		}
 		return result;
 		
-	}
-	public void moveToDest(int dir, float x, float y) {
-	}
-	
-	public void onMove(int dir, float testX, float testY) {
 	}
 	
 	public void update(Input input, int delta, ArrayList<Sprite> sprites) {
