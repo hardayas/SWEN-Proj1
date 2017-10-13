@@ -14,6 +14,9 @@ public class Player extends Movable  {
 	
 	@Override
 	public void update(Input input, int delta, World world) {
+		
+		float x = getX(), y = getY();
+		
 		int dir = DIR_NONE;
 		Sprite testSprite;
 		
@@ -65,7 +68,14 @@ public class Player extends Movable  {
 		}
 		
 		//this moves player
-		world.setPlayerMoved(moveToDest(dir, world));
+		if(moveToDest(dir, world)) {
+			world.setPlayerMoved(true);
+			world.updateMovableHistory(x, y);
+		}else {
+			world.setPlayerMoved(false);
+		}
+			
+		
 		//depending on the input add to history
 		
 		

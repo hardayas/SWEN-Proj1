@@ -9,7 +9,7 @@ import org.newdawn.slick.Input;
 public class World {
 	
 	boolean restart = false;
-	boolean nextLevel = false; //influenced by player and switch
+	boolean nextLevel = false; //influenced by player and target
 	boolean closedDoor = true;
 	
 	private  ArrayList<Sprite> sprites;
@@ -20,6 +20,7 @@ public class World {
 		
 	
 	private boolean playerMoved = false;
+	
 	public ArrayList<Sprite> getSprites() {
 		return sprites;
 	}
@@ -98,8 +99,10 @@ public class World {
 		
 	}
 	
-	public void updateMovableHistory(ArrayList<Sprite> s) {
-		history.push(s, this);
+	public void updateMovableHistory(float x, float y) {
+		
+		history.push(x, y, this);
+		System.out.println(history.getxS());
 	}
 	
 	public void undoHistory() {

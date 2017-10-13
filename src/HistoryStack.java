@@ -3,32 +3,35 @@ import java.util.ArrayList;
 
 public class HistoryStack {
 	
-	private ArrayList<ArrayList<Sprite>> stack;
+	public ArrayList<Float> xS;
+	
+	public float getxS() {
+		return xS.get(xS.size()-1);
+	}
+
+
+	public ArrayList<Float> yS;
 	
 
 	public HistoryStack() {
-		stack = new ArrayList<ArrayList<Sprite>>();
+		xS = new ArrayList<Float>();
+		yS = new ArrayList<Float>();
 	}
 	
-	public ArrayList<Sprite> getStack() {
-		return stack.get(0);
-	}
+	
 
-	public void push(ArrayList<Sprite> s2, World world) {
-		stack.add(s2); 
-		for(ArrayList<Sprite> s1 : world.history.stack) {
-			System.out.println(world.history.stack.size());	
-			for(Sprite s: s1) {
-				System.out.println(s.getType() + " " + s.getX());			}
-		}
+	public void push(float x, float y , World world) {
+		xS.add(x); 
+		yS.add(y);
 	}
 	
 	public void pop() {
-		stack.remove(stack.size() - 1);
+		xS.remove(xS.size() - 1);
+		yS.remove(yS.size() - 1);
 		
 	}
 	
 	public int size() {
-		return stack.size();
+		return xS.size();
 	}
 }
