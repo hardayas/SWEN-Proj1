@@ -16,6 +16,8 @@ public class Tnt extends Pushable {
 		this.explosion = explosion;
 	}
 	
+	
+	
 	//using polymorphism here since tnt can run into cracked wall
 	@Override
 	public boolean moveToDest(int dir, World world) {

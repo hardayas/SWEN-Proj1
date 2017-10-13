@@ -13,6 +13,12 @@ public abstract class Movable extends Sprite {
 	
 	private HistoryStack history = new HistoryStack();
 	
+	public HistoryStack getHistory() {
+		return history;
+	}
+	public void setHistory(HistoryStack history) {
+		this.history = history;
+	}
 	public boolean hasHistory() {
 		return true;
 	}
@@ -22,9 +28,12 @@ public abstract class Movable extends Sprite {
 	}
 	
 	public void undo() {
-		setX(history.getLastX());
-		setY(history.getLastY());
-		history.pop();
+		if(!history.isEmpty()) {
+			setX(history.getLastX());
+			setY(history.getLastY());
+			history.pop();
+		}
+		
 	}
 	public boolean moveToDest(int dir, World world) {
 		boolean result = false;

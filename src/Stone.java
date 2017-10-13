@@ -8,4 +8,7 @@ public class Stone extends Pushable {
 		super("res/stone.png", x, y);
 	}
 	
+	
+	
+	
 }

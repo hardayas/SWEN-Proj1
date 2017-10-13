@@ -13,11 +13,18 @@ public class Ice extends Pushable {
 	public void update(Input input, int delta, World world) {
 		time += delta/1000f; 
 		
-		if(time>oneSecond) {
-			moveToDest(moveDirection, world);
-			
-			time = 0;
-		}	
+		if(world.isPlayerMoved()) {
+			addToHistory(getX(), getY());
+		}
+		if(world.undoFlag) {
+			undo();
+		}
+		else {
+			if(time>oneSecond) {
+				moveToDest(moveDirection, world);
+				time = 0;
+			}
+		}
 	}
 	
 	@Override

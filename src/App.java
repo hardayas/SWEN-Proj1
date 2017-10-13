@@ -25,7 +25,7 @@ public class App extends BasicGame
     public static final int TILE_SIZE = 32;
     
     private World world;
-    private int level = 0;
+    private int level = 2;
 
     public App()
     {    	

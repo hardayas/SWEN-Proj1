@@ -12,6 +12,14 @@ public class HistoryStack {
 	public float getLastY() {
 		return yStack.get(yStack.size()-1);
 	}
+	
+	public float getSecondLastX() {
+		return xStack.get(xStack.size()-2);
+	}
+	
+	public float getSecodLastY() {
+		return yStack.get(yStack.size()-2);
+	}
 
 	public ArrayList<Float> yStack;
 	
@@ -34,7 +42,7 @@ public class HistoryStack {
 		
 	}
 	
-	public int size() {
-		return xStack.size();
+	public boolean isEmpty() {
+		return xStack.size() == 0;
 	}
 }

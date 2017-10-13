@@ -15,6 +15,7 @@ public class Player extends Movable  {
 	@Override
 	public void update(Input input, int delta, World world) {
 		
+		world.undoFlag = false;
 		float lastX = getX(), lastY = getY();
 		
 		int dir = DIR_NONE;
@@ -81,6 +82,7 @@ public class Player extends Movable  {
 		
 		//undo
 		if(input.isKeyPressed(Input.KEY_U)) {
+			world.undoFlag = true; 
 			undo();
 		}
 		

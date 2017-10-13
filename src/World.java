@@ -11,6 +11,7 @@ public class World {
 	boolean restart = false;
 	boolean nextLevel = false; //influenced by player and target
 	boolean closedDoor = true;
+	boolean undoFlag = false;
 	
 	private  ArrayList<Sprite> sprites;
 	ArrayList<Sprite> toRemove = new ArrayList<Sprite>();
@@ -107,7 +108,7 @@ public class World {
 	
 	public void undoHistory() {
 		
-		System.out.println(history.size());
+		//System.out.println(history.size());
 		history.pop();
 		/*ArrayList<Sprite> prevSprites = history.getStack();*/
 		/*for(Sprite s: history.getStack()) {
